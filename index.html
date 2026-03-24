@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f2f2f2;
+    --mid: #888;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Courier Prime', monospace;
+    overflow: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    background-size: 180px;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.4;
+  }
+
+  .page {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: clamp(30px, 5vw, 60px);
+  }
+
+  .center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .eyebrow {
+    font-family: 'Courier Prime', monospace;
+    font-size: clamp(10px, 1.2vw, 13px);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 14vw, 180px);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.4s;
+  }
+
+  .headline span {
+    display: block;
+    color: var(--black);
+    -webkit-text-stroke: 1px var(--white);
+  }
+
+  .divider {
+    width: clamp(40px, 8vw, 100px);
+    height: 1px;
+    background: var(--mid);
+    margin: clamp(20px, 3vw, 36px) 0;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .subtext {
+    font-size: clamp(11px, 1.3vw, 14px);
+    letter-spacing: 0.08em;
+    color: var(--mid);
+    line-height: 1.7;
+    max-width: 380px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+  }
+
+  .github-status {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .status-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .status-value {
+    font-size: clamp(11px, 1.2vw, 13px);
+    letter-spacing: 0.05em;
+    color: var(--white);
+  }
+
+  .status-value a {
+    color: var(--white);
+    text-decoration: none;
+    border-bottom: 1px solid #444;
+    transition: border-color 0.2s;
+  }
+
+  .status-value a:hover {
+    border-color: var(--white);
+  }
+
+  .discord-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid #333;
+    padding: 12px 20px;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+
+  .discord-link:hover {
+    border-color: var(--white);
+    background: var(--white);
+    color: var(--black);
+  }
+
+  .discord-link i {
+    font-size: 16px;
+  }
+
+  /* Corner marks */
+  .corner {
+    position: fixed;
+    width: 16px;
+    height: 16px;
+    opacity: 0.25;
+  }
+  .corner.tl { top: 20px; left: 20px; border-top: 1px solid var(--white); border-left: 1px solid var(--white); }
+  .corner.tr { top: 20px; right: 20px; border-top: 1px solid var(--white); border-right: 1px solid var(--white); }
+  .corner.bl { bottom: 20px; left: 20px; border-bottom: 1px solid var(--white); border-left: 1px solid var(--white); }
+  .corner.br { bottom: 20px; right: 20px; border-bottom: 1px solid var(--white); border-right: 1px solid var(--white); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  #last-online { color: var(--mid); font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<div class="page">
+  <div class="center">
+    <div class="eyebrow">Something is being built</div>
+    <div class="headline">
+      Coming<br><span>Soon</span>
+    </div>
+    <div class="divider"></div>
+    <div class="subtext">
+      We're putting the finishing touches on something new.<br>
+      Check back soon — or join the Discord to stay in the loop.
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="github-status">
+      <div class="status-label">Dev last seen</div>
+      <div class="status-value">
+        <a href="https://github.com/defrostee" target="_blank">defrostee</a>
+        &nbsp;—&nbsp;<span id="last-online">fetching...</span>
+      </div>
+    </div>
+
+    <a href="https://discord.gg/3A89AtD99" target="_blank" class="discord-link">
+      <i class="fab fa-discord"></i>
+      Join Discord
+    </a>
+  </div>
+</div>
+
+<script>
+  async function fetchLastOnline() {
+    const el = document.getElementById('last-online');
+    try {
+      const res = await fetch('https://api.github.com/users/defrostee/events/public');
+      const events = await res.json();
+      if (!events || !events.length) { el.textContent = 'no public activity'; return; }
+      const latest = new Date(events[0].created_at);
+      const now = new Date();
+      const diff = Math.floor((now - latest) / 1000);
+      let label;
+      if (diff < 60) label = `${diff}s ago`;
+      else if (diff < 3600) label = `${Math.floor(diff/60)}m ago`;
+      else if (diff < 86400) label = `${Math.floor(diff/3600)}h ago`;
+      else if (diff < 2592000) label = `${Math.floor(diff/86400)}d ago`;
+      else label = latest.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      el.textContent = label;
+    } catch {
+      el.textContent = 'unavailable';
+    }
+  }
+  fetchLastOnline();
+</script>
+</body>
+</html>
